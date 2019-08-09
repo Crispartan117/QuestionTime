@@ -1,18 +1,64 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App!!!!!" />
+    <div class="container">
+      <div v-for="question in questions"
+            :key="question.pk">
+        <p class="mb-0">Posted by:
+          <span class="author-name">{{ question.author }}</span>
+        </p>
+        <h2>
+          <router-link
+            :to="{ name: 'question', params: { slug: question.slug } }"
+            class="question-link"
+          >{{ question.content }}
+          </router-link>
+        </h2>
+        <p>Answers: {{ question.answers_count }}</p>
+        <hr>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
+import { apiService } from "../common/api.service"
 export default {
   name: "home",
-  components: {
-    HelloWorld
+  data() {
+    return {
+      questions: []
+    }
+  },
+  methods: {
+    getQuestions() {
+      let endpoint = "api/questions/";
+      apiService(endpoint)
+        .then(data => {
+          this.questions.push(...data.results)
+      })
+    }
+  },
+  created() {
+    this.getQuestions()
   }
 };
 </script>
+
+<style>
+.author-name {
+  font-weight: bold;
+  color: #cd3545;
+}
+
+.question-link {
+  font-weight: bold;
+  color: black;
+}
+
+.question-link:hover {
+  font-weight: bold;
+  color: #343A40;
+
+}
+</style>
+
