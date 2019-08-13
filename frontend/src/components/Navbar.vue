@@ -1,14 +1,26 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light my-navbar">
     <div class="container">
-      <router-link :to="{ name: 'home'}" class="navbar-brand">QuestionTime</router-link>
+      <router-link 
+        :to="{ name: 'home'}" 
+        class="navbar-brand"
+        >QuestionTime
+        </router-link>
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <router-link :to="{ name: 'home'}" class="btn btn-sm btn-success">Home</router-link>
+            <router-link
+              :to="{ name: 'home'}"
+              class="btn btn-sm btn-success"
+              >Home
+              </router-link>
           </li>
           <li class="nav-item active mx-1">
-            <router-link :to="{ name: 'home'}" class="btn btn-sm btn-danger">Add Question</router-link>
+            <router-link 
+              :to="{ name: 'question-editor'}" 
+              class="btn btn-sm btn-danger"
+              >Ask Question
+            </router-link>
           </li>
           <li class="nav-item">
             <a class="btn btn-sm btn-outline-secondary" href="/accounts/logout/">Logout</a>
