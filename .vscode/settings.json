@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "/home/bomucadev/wsdjango/QuestionTime/venv/bin/python"
+    "python.pythonPath": "/home/bomucadev/wsdjango/QuestionTime/venv/bin/python",
+    "editor.tabSize": 2
 }

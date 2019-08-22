@@ -1,7 +1,11 @@
 <template>
   <div class="single-question mt-2">
-    <div class="container">
+    <div v-if="question" class="container">
       <h1>{{ question.content }}</h1>
+      <QuestionActions 
+        v-if="isQuestionAuthor"
+        :slug="question.slug"
+      />
       <p class="mb-0">Posted by:
         <span class="author-name">{{ question.author }}</span>
       </p>
@@ -37,12 +41,16 @@
       </button>
     </div>
      <hr>
-    <div class="container">
+    </div>
+    <div v-else>
+      <h1 class="error text-center">404 - Question Not Found</h1>
+    </div>
+    <div v-if="question" class="container">
       <AnswerComponent 
-        v-for="(answer, index) in answers"
+        v-for="answer in answers"
         :answer="answer"
         :requestUser="requestUser"
-        :key="index"
+        :key="answer.id"
         @delete-answer="deleteAnswer"
       />
     </div>
@@ -60,6 +68,7 @@
 </template>
 
 <script>
+import QuestionActions from "@/components/QuestionActions.vue";
 import { apiService } from "@/common/api.service.js";
 import AnswerComponent from "@/components/Answer.vue";
 export default {
@@ -71,7 +80,8 @@ export default {
     }
   },
   components: {
-    AnswerComponent
+    AnswerComponent,
+    QuestionActions
   },
   data() {
     return {
@@ -87,6 +97,12 @@ export default {
 
     }
   },
+  computed: {
+    //retorna true si el usuario es el mismo que el autor de la instancia question.
+        isQuestionAuthor() {
+            return this.question.author === this.requestUser;
+        }
+  },
   methods: {
     setPageTitle(title) {
         document.title = title;
@@ -98,9 +114,14 @@ export default {
       let endpoint = `/api/questions/${this.slug}/`;
       apiService(endpoint)
         .then(data => {
+          if (data) {
             this.question = data;
             this.userHasAnswered = data.user_has_answered;
-            this.setPageTitle(data.content)
+            this.setPageTitle(data.content) 
+            } else {
+              this.question = null;
+              this.setPageTitle("404 - Page Not Found") 
+            }
         });
     },
     getQuestionAnswers() {
