@@ -43,7 +43,7 @@
      <hr>
     </div>
     <div v-else>
-      <h1 class="error text-center">404 - Question Not Found</h1>
+      <h1 class="error text-center ">404 - Question Not Found</h1>
     </div>
     <div v-if="question" class="container">
       <AnswerComponent 
@@ -63,8 +63,7 @@
           >Load More
           </button>
       </div>
-      </div>
-  </div>
+    </div>
 </template>
 
 <script>
