@@ -36,8 +36,8 @@ export default new Router({
       props: true
     },
     {
-      path: '*',
-      name: 'page-not-found',
+      path: "*",
+      name: "page-not-found",
       component: NotFound
     }
   ]
